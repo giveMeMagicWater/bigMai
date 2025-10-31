@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大麦网抢票工具 - 配置助手</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="header-left">
+                <h1><i class="fas fa-ticket-alt"></i> 大麦网抢票工具</h1>
+                <span class="version">v1.0.0</span>
+            </div>
+            <div class="header-right">
+                <button id="helpBtn" class="btn btn-secondary">
+                    <i class="fas fa-question-circle"></i> 帮助
+                </button>
+                <button id="aboutBtn" class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i> 关于
+                </button>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 左侧配置面板 -->
+            <aside class="config-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-cog"></i> 抢票配置</h3>
+                    <div class="panel-actions">
+                        <button id="newConfigBtn" class="btn btn-sm btn-primary" title="新建配置">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="loadConfigBtn" class="btn btn-sm btn-secondary" title="加载配置">
+                            <i class="fas fa-folder-open"></i>
+                        </button>
+                        <button id="saveConfigBtn" class="btn btn-sm btn-success" title="保存配置">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="config-content">
+                    <!-- 演出信息配置 -->
+                    <div class="config-section">
+                        <h4><i class="fas fa-music"></i> 演出信息</h4>
+                        
+                        <div class="form-group">
+                            <label for="showUrl">演出页面URL:</label>
+                            <div class="input-group">
+                                <input type="url" id="showUrl" placeholder="https://www.damai.cn/item/123456789.html">
+                                <button id="parseUrlBtn" class="btn btn-sm btn-primary">解析</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="showId">演出ID:</label>
+                            <input type="text" id="showId" placeholder="从URL自动解析或手动输入">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="showName">演出名称:</label>
+                            <input type="text" id="showName" placeholder="演出名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="venueName">演出场馆:</label>
+                            <input type="text" id="venueName" placeholder="场馆名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="showTime">演出时间:</label>
+                            <input type="datetime-local" id="showTime">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ticketTime">开票时间:</label>
+                            <input type="datetime-local" id="ticketTime" step="1">
+                        </div>
+                    </div>
+
+                    <!-- 票档配置 -->
+                    <div class="config-section">
+                        <h4><i class="fas fa-ticket-alt"></i> 票档配置</h4>
+                        
+                        <div class="form-group">
+                            <label for="ticketTypes">票档类型 (按优先级排序):</label>
+                            <div class="input-group">
+                                <input type="text" id="ticketTypes" placeholder="VIP,A区,B区,C区">
+                                <button id="addTicketTypeBtn" class="btn btn-sm btn-primary">添加</button>
+                            </div>
+                            <div id="ticketTypesList" class="tags-list"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxPrice">最高票价限制:</label>
+                            <input type="number" id="maxPrice" placeholder="0" min="0">
+                        </div>
+                    </div>
+
+                    <!-- 观演人配置 -->
+                    <div class="config-section">
+                        <h4><i class="fas fa-users"></i> 观演人配置</h4>
+                        
+                        <div class="form-group">
+                            <label for="viewerName">观演人姓名:</label>
+                            <div class="input-group">
+                                <input type="text" id="viewerName" placeholder="观演人姓名">
+                                <button id="addViewerBtn" class="btn btn-sm btn-primary">添加</button>
+                            </div>
+                            <div id="viewersList" class="tags-list"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxViewers">最大观演人数量:</label>
+                            <input type="number" id="maxViewers" value="4" min="1" max="10">
+                        </div>
+                    </div>
+
+                    <!-- 收货地址配置 -->
+                    <div class="config-section">
+                        <h4><i class="fas fa-map-marker-alt"></i> 收货地址</h4>
+                        
+                        <div class="form-group">
+                            <label for="addressName">收货人姓名:</label>
+                            <input type="text" id="addressName" placeholder="收货人姓名">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressPhone">联系电话:</label>
+                            <input type="tel" id="addressPhone" placeholder="联系电话">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressProvince">省份:</label>
+                            <input type="text" id="addressProvince" placeholder="省份">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressCity">城市:</label>
+                            <input type="text" id="addressCity" placeholder="城市">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressDistrict">区县:</label>
+                            <input type="text" id="addressDistrict" placeholder="区县">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressDetail">详细地址:</label>
+                            <textarea id="addressDetail" placeholder="详细地址" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 策略配置 -->
+                    <div class="config-section">
+                        <h4><i class="fas fa-chess"></i> 抢票策略</h4>
+                        
+                        <div class="form-group">
+                            <label for="advanceTime">提前进入时间 (毫秒):</label>
+                            <input type="number" id="advanceTime" value="1000" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="refreshInterval">刷新间隔 (毫秒):</label>
+                            <input type="number" id="refreshInterval" value="100" min="50">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxRetries">最大重试次数:</label>
+                            <input type="number" id="maxRetries" value="10" min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="concurrent">并发数量:</label>
+                            <input type="number" id="concurrent" value="3" min="1" max="10">
+                        </div>
+                    </div>
+
+                    <!-- 配置验证 -->
+                    <div class="config-validation">
+                        <button id="validateConfigBtn" class="btn btn-warning btn-block">
+                            <i class="fas fa-check-circle"></i> 验证配置
+                        </button>
+                        <div id="validationResult" class="validation-result"></div>
+                    </div>
+
+                    <!-- 启动抢票 -->
+                    <div class="start-section">
+                        <button id="startBotBtn" class="btn btn-success btn-block btn-lg">
+                            <i class="fas fa-rocket"></i> 启动抢票机器人
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右侧WebView区域 -->
+            <section class="webview-section">
+                <div class="webview-header">
+                    <h3><i class="fas fa-globe"></i> 大麦网页面</h3>
+                    <div class="webview-controls">
+                        <button id="refreshBtn" class="btn btn-sm btn-secondary" title="刷新">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button id="backBtn" class="btn btn-sm btn-secondary" title="后退">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button id="forwardBtn" class="btn btn-sm btn-secondary" title="前进">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button id="homeBtn" class="btn btn-sm btn-secondary" title="首页">
+                            <i class="fas fa-home"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="webview-container">
+                    <webview id="damaiWebview" src="https://www.damai.cn" 
+                             allowpopups="true" 
+                             webpreferences="contextIsolation=yes, nodeIntegration=no">
+                    </webview>
+                </div>
+
+                <div class="webview-status">
+                    <span id="webviewStatus">正在加载...</span>
+                    <span id="webviewUrl">https://www.damai.cn</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部状态栏 -->
+        <footer class="footer">
+            <div class="status-info">
+                <span id="configStatus">配置状态: 未配置</span>
+                <span id="lastSaved">最后保存: 从未保存</span>
+            </div>
+            <div class="app-info">
+                <span>大麦网抢票工具 v1.0.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                内容
+            </div>
+            <div class="modal-footer">
+                <button id="modalCancelBtn" class="btn btn-secondary">取消</button>
+                <button id="modalConfirmBtn" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 帮助模态框 -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> 使用帮助</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="help-content">
+                    <h4>🎯 配置步骤</h4>
+                    <ol>
+                        <li><strong>获取演出信息</strong>：在大麦网找到目标演出，复制演出页面URL</li>
+                        <li><strong>解析演出信息</strong>：点击"解析"按钮自动获取演出ID和基本信息</li>
+                        <li><strong>配置票档信息</strong>：设置票档类型和价格限制</li>
+                        <li><strong>设置观演人</strong>：添加观演人信息</li>
+                        <li><strong>配置收货地址</strong>：设置收货人信息和地址</li>
+                        <li><strong>验证配置</strong>：点击"验证配置"检查配置完整性</li>
+                        <li><strong>启动抢票</strong>：配置完成后启动抢票机器人</li>
+                    </ol>
+
+                    <h4>⚙️ 参数说明</h4>
+                    <ul>
+                        <li><strong>演出ID</strong>：从演出页面URL获取，如 https://www.damai.cn/item/123456789.html 中的 123456789</li>
+                        <li><strong>开票时间</strong>：精确到秒的开票时间，建议提前1-2秒设置</li>
+                        <li><strong>票档类型</strong>：按优先级排序，用逗号分隔，如：VIP,A区,B区</li>
+                        <li><strong>观演人</strong>：必须提前在大麦网完成实名认证</li>
+                    </ul>
+
+                    <h4>⚠️ 注意事项</h4>
+                    <ul>
+                        <li>请确保网络环境稳定</li>
+                        <li>建议提前测试配置</li>
+                        <li>遵守大麦网使用条款</li>
+                        <li>观演人必须提前设置并完成实名认证</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于模态框 -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> 关于</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="about-content">
+                    <h4>大麦网抢票工具</h4>
+                    <p>版本: v1.0.0</p>
+                    <p>基于 Node.js + Electron + Puppeteer 技术栈</p>
+                    <p>提供图形化配置界面和自动化抢票功能</p>
+                    <br>
+                    <p><strong>主要功能:</strong></p>
+                    <ul>
+                        <li>可视化配置界面</li>
+                        <li>WebView集成大麦网</li>
+                        <li>自动化抢票流程</li>
+                        <li>智能重试机制</li>
+                        <li>反检测策略</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html> 

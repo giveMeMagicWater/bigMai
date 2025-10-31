@@ -1,0 +1,63 @@
+{
+  "name": "bigmai-ticket-bot",
+  "version": "1.0.0",
+  "description": "大麦网自动化抢票工具",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "node start.js",
+    "dev": "node src/index.js",
+    "electron": "electron .",
+    "electron-dev": "electron . --dev",
+    "build": "electron-builder",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "damai",
+    "ticket",
+    "bot",
+    "automation",
+    "抢票",
+    "大麦网"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.15",
+    "node-cron": "^3.0.3",
+    "ora": "^7.0.1",
+    "puppeteer": "^21.11.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.bigmai.ticketbot",
+    "productName": "大麦网抢票工具",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "config/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+}
